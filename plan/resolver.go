@@ -238,9 +238,7 @@ func (nr *nameResolver) Enter(inNode ast.Node) (outNode ast.Node, skipChildren b
 		}
 		nr.pushContext()
 	case *ast.ShowStmt:
-		nr.pushContext()
-		nr.currentContext().inShow = true
-		nr.fillShowFields(v)
+		return inNode, true
 	case *ast.TableRefsClause:
 		nr.currentContext().inTableRefs = true
 	case *ast.TruncateTableStmt:
@@ -326,8 +324,6 @@ func (nr *nameResolver) Leave(inNode ast.Node) (node ast.Node, ok bool) {
 		}
 		nr.popContext()
 	case *ast.SetStmt:
-		nr.popContext()
-	case *ast.ShowStmt:
 		nr.popContext()
 	case *ast.SubqueryExpr:
 		if nr.useOuterContext {
