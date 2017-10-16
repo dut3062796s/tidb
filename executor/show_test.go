@@ -386,6 +386,10 @@ func (s *testSuite) TestIssue3641(c *C) {
 	c.Assert(err.Error(), Equals, plan.ErrNoDB.Error())
 	_, err = tk.Exec("show table status;")
 	c.Assert(err.Error(), Equals, plan.ErrNoDB.Error())
+	_, err = tk.Exec("show index from t")
+	c.Assert(err.Error(), Equals, plan.ErrNoDB.Error())
+	_, err = tk.Exec("show create table t")
+	c.Assert(err.Error(), Equals, plan.ErrNoDB.Error())
 }
 
 // TestShow2 is moved from session_test

@@ -562,7 +562,8 @@ func (b *planBuilder) buildShow(show *ast.ShowStmt) Plan {
 	case ast.ShowWarnings:
 		p.SetSchema(buildShowWarningsSchema())
 	default:
-		if showTp == ast.ShowTables || showTp == ast.ShowTableStatus {
+		switch showTp {
+		case ast.ShowTableStatus, ast.ShowTables, ast.ShowIndex, ast.ShowCreateTable:
 			if show.DBName == "" {
 				b.err = errors.Trace(ErrNoDB)
 				return nil
